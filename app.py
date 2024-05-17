@@ -1,20 +1,8 @@
-from flask import Flask
 import json
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
 PORT = 8000
-# Flask constructor takes the name of 
-# current module (__name__) as argument.
-app = Flask(__name__)
-
-# The route() function of the Flask class is a decorator, 
-# which tells the application which URL should call 
-# the associated function.
-@app.route('/')
-# ‘/’ URL is bound with hello_world() function.
-def hello_world():
-    return 'Hello World'
 
 class API():
     def __init__(self):
@@ -57,9 +45,56 @@ def list(_):
         "items": example_data["items"]
     }
 
-# main driver function
-if __name__ == '__main__':
-     class ApiRequestHandler(BaseHTTPRequestHandler):
+@api.get("/search")
+def search(args):
+    q = args.get("q", None)
+
+    if q is None:
+        return { "error": "q parameter required" }
+    else:
+        results = []
+        for item in example_data["items"]:
+            if item["name"].count(q) > 0:
+                results.append(item)
+        return { "count": len(results), "items": results }
+
+
+@api.post("/add")
+def add(args):
+    id = example_data["items"].copy().pop()["id"] + 1
+    name = args.get("name", None)
+    description = args.get("description", None)
+
+    if name is None or description is None:
+        return { "error": "name and description are required parameters" }
+    else:
+        item = { "id": id, "name": name, "description": description }
+        example_data["items"].append(item)
+        return item
+
+
+@api.post("/delete")
+def delete(args):
+    id = args.get("id", None)
+    if id is None:
+        return { "error": "id parameter required" }
+    else:
+        item_deleted = False
+
+        for item in example_data["items"]:
+            if item["id"] == id:
+                example_data["items"].remove(item)
+                item_deleted = True
+                break
+        
+        if item_deleted:
+            return { "deleted": id }
+        else:
+            return { "error": f"item not found with id {id}" }
+
+
+if __name__ == "__main__":
+    class ApiRequestHandler(BaseHTTPRequestHandler):
         global api
         
         def call_api(self, method, path, args):
@@ -104,9 +139,7 @@ if __name__ == '__main__':
                 self.call_api("POST", path, json.loads(data))
 
 
-httpd = HTTPServer(('', PORT), ApiRequestHandler)
-print(f"Application started at http://127.0.0.1:{PORT}/")
-httpd.serve_forever()
-    # run() method of Flask class runs the application 
-    # on the local development server.
-    # app.run()
+    httpd = HTTPServer(('', PORT), ApiRequestHandler)
+    print(f"Application started at http://127.0.0.1:{PORT}/")
+    httpd.serve_forever()
+
