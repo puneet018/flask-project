@@ -4,8 +4,12 @@ app = Flask(__name__)
 
 # Sample data to serve
 data = [
-{'id': 1, 'name': 'John Doe', 'age': 30},
-{'id': 2, 'name': 'Jane Doe', 'age': 25},
+{'id': 1, 'name': 'Shivam gandu', 'age': 30},
+{'id': 2, 'name': 'Puneet', 'age': 25},
+{'id': 3, 'name': 'Ankit', 'age': 40},
+{'id': 4, 'name': 'Akash', 'age': 20},
+{'id': 5, 'name': 'Harsit', 'age': 30},
+{'id': 6, 'name': 'Vineet', 'age': 25},
 ]
 
 # Route to get all users
@@ -50,3 +54,6 @@ def get_users():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+
