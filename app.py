@@ -94,6 +94,7 @@ def delete(args):
 
 
 if __name__ == "__main__":
+    api.run()
     class ApiRequestHandler(BaseHTTPRequestHandler):
         global api
         
