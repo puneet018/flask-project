@@ -1,7 +1,9 @@
 from flask import Flask
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
-
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 # Sample data to serve
 data = [
 {'id': 1, 'name': 'Shivam gandu', 'age': 30},
@@ -14,8 +16,11 @@ data = [
 
 # Route to get all users
 @app.route('/users', methods=['GET'])
+@cross_origin()
 def get_users():
-    return data
+    return jsonify({"code": 200, "message": "Signup success", "data": info})
+
+
 
 # Route to get a user by ID
 # @app.route('/users/<int:user_id>', methods=['GET'])
