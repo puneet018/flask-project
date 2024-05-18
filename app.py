@@ -18,7 +18,7 @@ data = [
 @app.route('/users', methods=['GET'])
 @cross_origin()
 def get_users():
-    return jsonify({"code": 200, "message": "Signup success", "data": info})
+    return data
 
 
 
