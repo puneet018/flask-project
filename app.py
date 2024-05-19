@@ -24,7 +24,7 @@ data = [
 def get_users():
     return data
 
-@app.route('/insert', methods=['POST'])
+@app.route('/insert', methods=['POST', 'GET'])
 @cross_origin()
 def insert_data():
     
