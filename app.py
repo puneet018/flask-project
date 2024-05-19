@@ -19,10 +19,26 @@ data = [
 # users = userdb.customers
 
 # Route to get all users
-@app.route('/users', methods=['GET'])
+@app.route('/users', methods=['GET', 'POST'])
 @cross_origin()
 def get_users():
-    return data
+	# if request.method == 'POST':
+		name = request.form['name']
+		email = request.form['email']
+		password = request.form['password']
+       
+		reg_user = {}
+		reg_user['name'] = name
+		reg_user['email'] = email
+		reg_user['password'] = password
+    
+		if name != '':
+			# users.insert_one(reg_user)
+			print('insert - '. reg_user)
+			return reg_user
+		else:
+			return "False"
+    # return data
 
 @app.route('/insert', methods=['POST', 'GET'])
 def insert_data():
