@@ -41,9 +41,9 @@ def insert_data():
 		if name != '':
 			# users.insert_one(reg_user)
 			print('insert - '. reg_user)
-			return True
+			return reg_user
 		else:
-			return False
+			return "False"
 
 # Route to get a user by ID
 # @app.route('/users/<int:user_id>', methods=['GET'])
