@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
@@ -14,13 +14,36 @@ data = [
 {'id': 6, 'name': 'Vineet', 'age': 25},
 ]
 
+# client = pymongo.MongoClient('mongodb://127.0.0.1:27017/')
+# userdb = client['userdb']
+# users = userdb.customers
+
 # Route to get all users
 @app.route('/users', methods=['GET'])
 @cross_origin()
 def get_users():
     return data
 
-
+@app.route('/insert', methods=['POST'])
+@cross_origin()
+def insert_data():
+    
+	if request.method == 'POST':
+		name = request.form['name']
+		email = request.form['email']
+		password = request.form['password']
+       
+		reg_user = {}
+		reg_user['name'] = name
+		reg_user['email'] = email
+		reg_user['password'] = password
+    
+		if name != '':
+			# users.insert_one(reg_user)
+			print('insert - '. reg_user)
+			return True
+		else:
+			return False
 
 # Route to get a user by ID
 # @app.route('/users/<int:user_id>', methods=['GET'])
