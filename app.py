@@ -28,7 +28,7 @@ def get_users():
 @cross_origin()
 def insert_data():
     
-	if request.method == 'POST':
+	# if request.method == 'POST':
 		name = request.form['name']
 		email = request.form['email']
 		password = request.form['password']
