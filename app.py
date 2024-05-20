@@ -20,11 +20,12 @@ data = [
 
 # Route to get all users
 @app.route('/users', methods=['GET', 'POST'])
-@cross_origin()
+
 def get_users():
 	return data
 
-@app.route('/insert', methods=['POST', 'GET'])
+@app.route('/insert', methods=['POST'])
+@cross_origin()
 def insert_data():
     
 	# if request.method == 'POST':
