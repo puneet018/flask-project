@@ -29,18 +29,26 @@ def get_users():
 def insert_data():
     
 	# if request.method == 'POST':
-		name = request.form['name']
-		email = request.form['email']
-		password = request.form['password']
+		data = request.get_json()
+		 
+		# name = request.form['name']
+		# email = request.form['email']
+		# password = request.form['password']
        
-		reg_user = {}
-		reg_user['name'] = name
-		reg_user['email'] = email
-		reg_user['password'] = password
+		# reg_user = {}
+		# reg_user['name'] = name
+		# reg_user['email'] = email
+		# reg_user['password'] = password
     
+        # parser = reqparse.RequestParser()
+        # parser.add_argument('title', required=True)
+        # parser.add_argument('author', required=True)
+        # parser.add_argument('published_date', required=True)
+        #     args = parser.parse_args()
+
 		if name != '':
 			# users.insert_one(reg_user)
-			return reg_user
+			return data
 		else:
 			return "False"
 
