@@ -46,11 +46,11 @@ def insert_data():
         # parser.add_argument('published_date', required=True)
         #     args = parser.parse_args()
 
-		if name != '':
+		# if name != '':
 			# users.insert_one(reg_user)
-			return data
-		else:
-			return "False"
+		return data
+		# else:
+		# 	return "False"
 
 # Route to get a user by ID
 # @app.route('/users/<int:user_id>', methods=['GET'])
