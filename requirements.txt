@@ -2,3 +2,5 @@ Flask
 Gunicorn
 jsonify
 flask-cors
+pymongo
+Flask-PyMongo

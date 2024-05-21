@@ -1,10 +1,15 @@
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
+from flask_pymongo import PyMongo
 
 app = Flask(__name__)
+app.config["MONGO_URI"] = "mongodb+srv://nikkyvishwa90:nikkyvishwa90@cluster0.jc8u7cz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0/flaskProjectDB"
+mongo = PyMongo(app)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
+
 # Sample data to serve
+
 data = [
 {'id': 1, 'name': 'Shivam gandu', 'age': 30},
 {'id': 2, 'name': 'Puneet', 'age': 25},
@@ -47,7 +52,7 @@ def insert_data():
         #     args = parser.parse_args()
 
 		# if name != '':
-			# users.insert_one(reg_user)
+		mongo.db.user_table.insert_one(data)
 		return data
 		# else:
 		# 	return "False"
