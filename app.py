@@ -1,9 +1,6 @@
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
 from flask_pymongo import PyMongo , pymongo
-import certifi
-
-ca = certifi.where()
 
 app = Flask(__name__)
 # app.config["MONGO_URI"] = "mongodb+srv://nikkyvishwa90:nikkyvishwa90@cluster0.jc8u7cz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0/sample_mflix"
