@@ -1,10 +1,13 @@
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
-from flask_pymongo import PyMongo
+from flask_pymongo import PyMongo , pymongo
+import certifi
+
+ca = certifi.where()
 
 app = Flask(__name__)
-app.config["MONGO_URI"] = "mongodb+srv://nikkyvishwa90:nikkyvishwa90@cluster0.jc8u7cz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0/flaskProjectDB"
-mongo = PyMongo(app)
+# app.config["MONGO_URI"] = "mongodb+srv://nikkyvishwa90:nikkyvishwa90@cluster0.jc8u7cz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0/sample_mflix"
+# db = PyMongo(app).db
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
@@ -19,9 +22,9 @@ data = [
 {'id': 6, 'name': 'Vineet', 'age': 25},
 ]
 
-# client = pymongo.MongoClient('mongodb://127.0.0.1:27017/')
-# userdb = client['userdb']
-# users = userdb.customers
+client = pymongo.MongoClient('mongodb+srv://nikkyvishwa90:nikkyvishwa90@cluster0.jc8u7cz.mongodb.net/sample_mflix?retryWrites=true&w=majority&appName=Cluster0')
+userdb = client['sample_mflix']
+users = userdb.users
 
 # Route to get all users
 @app.route('/users', methods=['GET', 'POST'])
@@ -29,13 +32,12 @@ data = [
 def get_users():
 	return data
 
-@app.route('/insert', methods=['POST'])
+@app.route('/insert', methods=['POST', 'GET'])
 @cross_origin()
 def insert_data():
     
 	# if request.method == 'POST':
-		data = request.get_json()
-		 
+		# data = request.get_json()
 		# name = request.form['name']
 		# email = request.form['email']
 		# password = request.form['password']
@@ -52,7 +54,10 @@ def insert_data():
         #     args = parser.parse_args()
 
 		# if name != '':
-		mongo.db.user_table.insert_one(data)
+		# mongo.users.find_one()
+		data = users.find()
+		print('------')
+		# print(userdb)
 		return data
 		# else:
 		# 	return "False"
