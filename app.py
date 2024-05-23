@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, Response
 from flask_cors import CORS, cross_origin
 from flask_pymongo import PyMongo , pymongo
 
@@ -9,9 +9,18 @@ cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 # Sample data to serve
+# def endpoint():
+# 	results_bulk_iter = iter([])
+# 	response = Response(stream_with_context(bulk_update_streamed_response(results_bulk_iter)),
+# 					mimetype='text/plain')
+# 	return response
 
+# def bulk_update_streamed_response(results):
+# 	for updated, _ in results:
+# 		yield str(counter).decode('utf-8')
+            
 data = [
-{'id': 1, 'name': 'Shivam gandu', 'age': 30},
+{'id': 1, 'name': 'Shivam', 'age': 30},
 {'id': 2, 'name': 'Puneet', 'age': 25},
 {'id': 3, 'name': 'Ankit', 'age': 40},
 {'id': 4, 'name': 'Akash', 'age': 20},
@@ -19,8 +28,8 @@ data = [
 {'id': 6, 'name': 'Vineet', 'age': 25},
 ]
 
-client = pymongo.MongoClient('mongodb+srv://nikkyvishwa90:nikkyvishwa90@cluster0.jc8u7cz.mongodb.net/sample_mflix?retryWrites=true&w=majority&appName=Cluster0')
-userdb = client['sample_mflix']
+client = pymongo.MongoClient('mongodb+srv://shivams:shivams@cluster0.jc8u7cz.mongodb.net/sample_mflix?retryWrites=true&w=majority&appName=Cluster0')
+userdb = client['FlaskDB']
 users = userdb.users
 
 # Route to get all users
@@ -34,7 +43,7 @@ def get_users():
 def insert_data():
     
 	# if request.method == 'POST':
-		# data = request.get_json()
+		data = request.get_json()
 		# name = request.form['name']
 		# email = request.form['email']
 		# password = request.form['password']
@@ -51,11 +60,9 @@ def insert_data():
         #     args = parser.parse_args()
 
 		# if name != '':
-		# mongo.users.find_one()
-		data = users.find()
-		print('------')
-		# print(userdb)
-		return data
+		_id = users.insert_one(data)
+		print(_id.inserted_id)
+		return 'true'
 		# else:
 		# 	return "False"
 
