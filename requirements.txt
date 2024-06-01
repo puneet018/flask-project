@@ -4,3 +4,7 @@ jsonify
 flask-cors
 pymongo
 Flask-PyMongo
+certifi
+twilio
+dotenv
+flask-session
