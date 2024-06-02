@@ -2,7 +2,7 @@ from flask import Flask, request, Response, session
 from flask_cors import CORS, cross_origin
 from flask_pymongo import PyMongo , pymongo
 from twilio.rest import Client
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 from jsonify import convert
 import os
 
@@ -30,9 +30,8 @@ users = userdb.users
 
 # Route to get all users
 @app.route('/users', methods=['GET', 'POST'])
-
 def get_users():
-	return data
+	return "data"
 
 @app.route('/insert', methods=['POST', 'GET'])
 @cross_origin()
@@ -60,7 +59,7 @@ def check_user():
 
 # OTP authentication confrigration
 account_sid = "ACe153842b9f2450d2a72c5f7386220822"
-auth_token = "9f31ad65c96fc712130c192e866192eb"
+auth_token = "aa895c8db2b824e7055d5098edd50d7c"
 verify_sid = "VAa978386901f486de36aa578d653eef51"
 from_number = "+15706825138"
 
