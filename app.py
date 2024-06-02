@@ -2,7 +2,7 @@ from flask import Flask, request, Response, session
 from flask_cors import CORS, cross_origin
 from flask_pymongo import PyMongo , pymongo
 from twilio.rest import Client
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from jsonify import convert
 import os
 
