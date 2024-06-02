@@ -7,6 +7,8 @@ from jsonify import convert
 import os
 
 app = Flask(__name__)
+
+app.secret_key = b'NjYgNmMgNjEgNzMgNmIgNjMgNmYgNjQgNjU='
 # app.config["MONGO_URI"] = "mongodb+srv://nikkyvishwa90:nikkyvishwa90@cluster0.jc8u7cz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0/sample_mflix"
 # db = PyMongo(app).db
 cors = CORS(app)
@@ -76,6 +78,8 @@ def create_user():
 	# if name != '':
 	_id = users.insert_one(new_user)
 	number = new_user['number']
+	
+	# sending opt for verification of user
 	send_otp_via_sms(number)
     # data.append(new_user)
 	return 'otp send'
@@ -87,11 +91,12 @@ def send_otp_via_sms(number):
 	
 	otp_verification = client.verify.services(verify_sid).verifications.create(
 	 to=number, channel="sms")
+	session['number'] = number
 	print(otp_verification.status)
 	# print(messages.status['valid'])
 	# print(messages.status.valid)
 	# print(messages['valid'])
-	# print(messages.valid)
+
 
     # messages = client.messages.create(to=f"{number}", from_=os.getenv(
     #     'TWILIO_NUMBER'), body=f"Your one-time password is {code}")
@@ -100,9 +105,8 @@ def send_otp_via_sms(number):
 @app.route('/check_otp', methods=['POST'])
 def check_otp():
 	verify_data = request.get_json()
-	print(verify_data['number'])
 	otp_check = client.verify.services(verify_sid).verification_checks.create(
-		to=verify_data['number'], code=verify_data['otp_code']
+		to=session['number'], code=verify_data['otp_code']
 	)
 	print(otp_check.status)
 	return 'done'
