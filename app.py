@@ -61,7 +61,7 @@ def check_user():
 
 # OTP authentication confrigration
 account_sid = "ACe153842b9f2450d2a72c5f7386220822"
-auth_token = "aa895c8db2b824e7055d5098edd50d7c"
+auth_token = "0f17e7fe12b1ae7ef3ac15b9a8d4e73b"
 verify_sid = "VAa978386901f486de36aa578d653eef51"
 from_number = "+15706825138"
 
@@ -78,38 +78,35 @@ def create_user():
 	# if name != '':
 	_id = users.insert_one(new_user)
 	number = new_user['number']
-	
+	userName = new_user['name']
+
 	# sending opt for verification of user
-	send_otp_via_sms(number)
-    # data.append(new_user)
-	return 'otp send'
+	status  = send_otp_via_sms(number, userName)
+	return status
 
-
-def send_otp_via_sms(number):
+def send_otp_via_sms(number, userName):
 	# massage = client.messages.create(body="Hello world", from_=from_number,
 	#   to=number)
 	
 	otp_verification = client.verify.services(verify_sid).verifications.create(
 	 to=number, channel="sms")
 	session['number'] = number
-	print(otp_verification.status)
-	# print(messages.status['valid'])
-	# print(messages.status.valid)
-	# print(messages['valid'])
 
+	return otp_verification.status
+	# code = 123012
+# messages = client.messages.create(to=number, from_=from_number, body=f"Hello "+userName+" Your one-time password is "+code)
+# print(messages)
 
-    # messages = client.messages.create(to=f"{number}", from_=os.getenv(
-    #     'TWILIO_NUMBER'), body=f"Your one-time password is {code}")
-# input_otp = input("enter")
-# check_opt(input_otp)
 @app.route('/check_otp', methods=['POST'])
 def check_otp():
 	verify_data = request.get_json()
 	otp_check = client.verify.services(verify_sid).verification_checks.create(
 		to=session['number'], code=verify_data['otp_code']
 	)
-	print(otp_check.status)
-	return 'done'
+	return otp_check.status
+
+
+
 # Route to get a user by ID
 # @app.route('/users/<int:user_id>', methods=['GET'])
 # def get_user(user_id):
